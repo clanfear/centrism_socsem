@@ -1,5 +1,4 @@
-.Rproj*
-/ignore/
-ignore*
-/.Rproj.user/
-*.Rproj
+ignore/
+.rproj.user/
+.Rproj.user/
+*.rproj*

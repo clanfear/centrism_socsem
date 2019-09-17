@@ -49,7 +49,7 @@ centrism_css <- list(
     "display"="block",
     "margin-left"="auto",
     "margin-right"="auto"),
-  ".title-slide" = list("background-image" = "url(https://clanfear.github.io/centrism_socsem/slides/img/UWSocBG1_white.svg), url(https://clanfear.github.io/centrism/markdown/socsem_092719/img/title_slide_img.png)",
+  ".title-slide" = list("background-image" = "url(https://clanfear.github.io/centrism_socsem/slides/img/UWSocBG1_white.svg), url(https://clanfear.github.io/centrism_socsem/slides/img/title_slide_img.png)",
                         "background-position" = "center center, center bottom",
                         "background-size" = "contain, contain")
 )
