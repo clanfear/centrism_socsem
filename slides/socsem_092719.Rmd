@@ -24,7 +24,7 @@ library(xaringanthemer)
 source("./centrism_css.R")
 ```
 
-# First Slide Title
+# First Slide Titl
 
 ---
 # Second Slide Title
