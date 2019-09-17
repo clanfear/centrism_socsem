@@ -1,5 +1,5 @@
 ---
-title: "Finding the Center"
+title: "Searching for the Center"
 subtitle: "Defining centrism in US Politics"
 author: "Steve Karceski<br>Chuck Lanfear<br>Kivan Polimis"
 date: "Sep 27, 2019<br>Updated: `r gsub(' 0', ' ', format(Sys.Date(), format='%b %d, %Y'))`"
