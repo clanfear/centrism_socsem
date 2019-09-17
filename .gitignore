@@ -1,8 +1,2 @@
-.Rproj.*
-/.rproj.user/**
-.rproj.*
-ignore/**
-
-.Rproj.user/6EFED00E/sources/s-7C014489/6033F92B
-.Rproj.user/6EFED00E/sources/s-7C014489/6033F92B-contents
-.Rproj.user/6EFED00E/sources/s-7C014489/FEF684FA
+.*
+!/.gitignore
