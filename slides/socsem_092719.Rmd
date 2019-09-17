@@ -23,3 +23,15 @@ knitr::opts_chunk$set(comment = "##")
 library(xaringanthemer)
 source("./centrism_css.R")
 ```
+
+# First Slide Title
+
+---
+# Second Slide Title
+
+.pull-left[Some left side stuff]
+.pull-right[Some right side stuff]
+
+---
+class: inverse
+# Transition Slide Title
