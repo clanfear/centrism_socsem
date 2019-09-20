@@ -1,3 +1,7 @@
 .*
 !/.gitignore
 ignore/
+.Rpoj.user/*
+.Rproj*
+.Rproj.user/6EFED00E/sources/prop/INDEX
+.Rproj.user/shared/notebooks/paths

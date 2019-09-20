@@ -26,7 +26,7 @@ source("./centrism_css.R")
 
 # Slide With Curves
 
-```{r, echo=FALSE, message=FALSE, warning=FALSE, fig.width =7, fig.height=3, dpi = 1000}
+```{r, echo=FALSE, message=FALSE, warning=FALSE, fig.width =7, fig.height=3, dpi = 1500}
 library(dplyr)
 library(ggplot2)
 library(patchwork)
@@ -63,6 +63,41 @@ plot_right <- tibble(x = rep(seq(-4, 4, length.out = 100),2),
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
 
 plot_left + plot_right
+```
+---
+# Slide with Minimum Wage
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE, dpi=1500, fig.width =7, fig.height=3}
+min_wage <- readxl::read_excel("../data/min_wage_extract.xlsx") %>% 
+  select(Measure, All) %>% 
+  filter(Measure !="Sample Size") %>% 
+  mutate(Measure = factor(Measure)) %>%
+  mutate(Position = factor(case_when(
+    Measure == "The minimum wage should immediately be raised to $15 per hour" ~ "$15 (immediate)",
+    Measure == "The minimum wage should gradually be raised to $15 per hour" ~ "$15 (gradual)",
+    Measure == "The minimum wage should be raised to an amount under $15 per hour" ~ "$7.25 - $15",
+    Measure == "The minimum wage should be kept the same" ~ "$7.25",
+    Measure == "The minimum wage should be reduced"  ~ "$0 - $7.25",
+    Measure == "The minimum wage should be eliminated" ~ "$0"
+  ), levels = c("$15 (immediate)", "$15 (gradual)", "$7.25 - $15","$7.25", "$0 - $7.25", "$0"), ordered=T),
+  Color = factor(case_when(
+    Position == "$15 (gradual)" ~ 1,
+    Position == "$7.25" ~ 2,
+    TRUE ~ 0
+  )))
+
+ggplot(min_wage, aes(x=Position, y = All, fill = Color)) + geom_col() +
+  theme_minimal(base_family = "Quattrocento") + 
+  xlab("\nPreferred Minimum Wage") +
+  scale_fill_manual(values=c("2" = "#458490", "1" = "#342c5c", "0" = "#cbd3a3")) +
+  scale_y_continuous("", limits = c(0, 400), labels = NULL) +
+  geom_curve(aes(x = 2, y = 325, xend = 2.35, yend=380), curvature = -0.45, angle = 90, arrow = arrow(angle = 30, length = unit(0.03, "npc"), ends = "first"), lwd = 0.6) + 
+  annotate("text", x = 3, y = 380, label = "Median Preferred\nMinimum Wage", family = "Quattrocento") +
+  geom_curve(aes(x = 4, y = 145, xend = 4.35, yend=200), curvature = -0.45, angle = 90 , arrow = arrow(angle = 30, length = unit(0.03, "npc"), ends = "first"), lwd = 0.6) + 
+    geom_hline(aes(yintercept = 0)) + 
+  annotate("text", x = 5, y = 200, label = "Current Federal\nMinimum Wage", family = "Quattrocento") +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(), legend.position = "none") +
+  labs(caption = "Hill-HarrisX Poll\nJanuary 19-20, 2019\nN = 1000")
 ```
 
 ---
