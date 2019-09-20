@@ -32,7 +32,6 @@ library(ggplot2)
 library(patchwork)
 library(extrafont)
 ttf_import("../syntax/fonts")
-loadfonts(device = "win")
 
 plot_left <- tibble(x = seq(-4, 4, length.out = 100), xpos=x, group = 0, facet= 1, density = dnorm(x, mean=0, sd=1.5)) %>%
   ggplot(aes(x = xpos, y = density)) + 
