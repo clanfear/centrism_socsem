@@ -68,7 +68,7 @@ plot_right <- tibble(x = rep(seq(-4, 4, length.out = 100),2),
 plot_left + plot_right
 ```
 ---
-# Slide with Minimum Wage
+# Minimum Wage
 
 ```{r, echo=FALSE, warning=FALSE, message=FALSE, dpi=1500, fig.width =7, fig.height=3}
 min_wage <- readxl::read_excel("../data/min_wage_extract.xlsx") %>% 
@@ -215,7 +215,7 @@ ggplot(typology_df, aes(x=x_loc, y=y_loc, label = label)) +
               color=NA, data = electorate_df, inherit.aes = F, alpha=0.3) +
   geom_circle(aes(x0 = x_loc, y0 = y_loc, r = radius, fill = party),
               color=NA, data = party_df, inherit.aes = F, alpha=0.6) +
-    geom_text(nudge_x = 0.01, nudge_y = -0.01, family = "Quattrocento", hjust=0, vjust=1) + 
+  geom_text(nudge_x = 0.01, nudge_y = -0.01, family = "Quattrocento", fontface="bold", hjust=0, vjust=1) + 
   geom_text(aes(label=party), family = "Quattrocento", data = party_df) + 
   geom_text(aes(label=affiliation), family = "Quattrocento", data = electorate_df, nudge_y = 0.15) + 
   scale_fill_manual(values = c("Democratic\nElectorate" = "blue", 
