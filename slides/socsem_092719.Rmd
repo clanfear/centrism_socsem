@@ -177,7 +177,7 @@ ggplot(min_wage_party, aes(x=Position, y = Prop, fill = Color)) + geom_col() +
 # social = race_deservemore_2016 + race_tryharder_2016 + race_slave_2016 +  inc_opp_blacks_2016 + ft_muslim_2016 + immi_contribution_2016 + immi_naturalize_2016 + immi_makedifficult_2016 + immi_muslim_2016 + abortview3_2016 + gaymar_2016 + view_transgender_2016
 
 typology_df <- tibble(
-  x_loc = c(0.35, 0.7, 0.8),
+  x_loc = c(0.35, 0.65, 0.8),
   y_loc = c(0.475, 0.575, 0.4),
   label = c("Electorate\nCentrism", "Partisan\nCentrism", "Elite\nCentrism")
 )
@@ -188,7 +188,7 @@ electorate_df <- tibble(
   affiliation = factor(c("Democratic\nElectorate", "Republican\nElectorate"))
 ) %>% mutate(affiliation = relevel(affiliation, "Republican\nElectorate"))
 party_df <- tibble(
-  x_loc = c(0.6, 0.8),
+  x_loc = c(0.5, 0.8),
   y_loc = c(0.3, 0.85),
   radius = c(0.1, 0.1),
   party = factor(c("Democratic\nParty", "Republican\nParty"))
