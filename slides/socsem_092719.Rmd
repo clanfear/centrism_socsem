@@ -36,13 +36,15 @@ library(ggforce)
 
 ttf_import("../syntax/fonts")
 
-plot_left <- tibble(x = seq(-4, 4, length.out = 100), xpos=x, group = 0, facet= 1, density = dnorm(x, mean=0, sd=1.5)) %>%
+plot_left <- tibble(x = seq(-4, 4, length.out = 100), xpos=x, group = 0,
+                    facet= 1, density = dnorm(x, mean=0, sd=1.5)) %>%
   ggplot(aes(x = xpos, y = density)) + 
   geom_line(lwd=1.5) + 
   scale_x_continuous("Preferences", breaks = c(-4, 4), labels = c("Left", "Right")) + 
   ylab("") + 
   scale_y_continuous(limits = c(0, 0.4), labels = NULL) +
-  geom_segment(aes(x = 0, y = 0.275, xend = 0, yend=0.32), arrow = arrow(angle = 30, length = unit(0.03, "npc"), ends = "first"), lwd = 0.6) + 
+  geom_segment(aes(x = 0, y = 0.275, xend = 0, yend=0.32), 
+               arrow = arrow(angle = 30, length = unit(0.03, "npc"), ends = "first"), lwd = 0.6) + 
   geom_hline(aes(yintercept = 0)) + 
   annotate("text", x = 0, y = 0.36, label = "Electorate\nCenter", family = "Quattrocento") +
   theme_minimal(base_family = "Quattrocento") + 
@@ -60,10 +62,13 @@ plot_right <- tibble(x = rep(seq(-4, 4, length.out = 100),2),
   scale_y_continuous(limits = c(0, 0.4), labels = NULL) +
   geom_hline(aes(yintercept = 0)) + 
   theme_minimal(base_family = "Quattrocento") + 
-  geom_segment(aes(x = -2.75, y = 0.275, xend = -1.6, yend=0.32), arrow = arrow(angle = 30, length = unit(0.03, "npc"), ends = "first"), lwd = 0.6) + 
-  geom_segment(aes(x = 2.75, y = 0.275, xend = 1.6, yend=0.32), arrow = arrow(angle = 30, length = unit(0.03, "npc"), ends = "first"), lwd = 0.6) + 
+  geom_segment(aes(x = -2.75, y = 0.275, xend = -1.6, yend=0.32), 
+               arrow = arrow(angle = 30, length = unit(0.03, "npc"), ends = "first"), lwd = 0.6) + 
+  geom_segment(aes(x = 2.75, y = 0.275, xend = 1.6, yend=0.32), 
+               arrow = arrow(angle = 30, length = unit(0.03, "npc"), ends = "first"), lwd = 0.6) + 
   annotate("text", x = 0, y = 0.36, label = "Partisan\nElectorate\nCenters", family = "Quattrocento") +
-  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank())
 
 plot_left + plot_right
 ```
@@ -94,12 +99,16 @@ ggplot(min_wage, aes(x=Position, y = All, fill = Color)) + geom_col() +
   xlab("\nPreferred Minimum Wage") +
   scale_fill_manual(values=c("2" = "#458490", "1" = "#342c5c", "0" = "#cbd3a3")) +
   scale_y_continuous("", limits = c(0, 400), labels = NULL) +
-  geom_curve(aes(x = 2, y = 325, xend = 2.35, yend=380), curvature = -0.45, angle = 90, arrow = arrow(angle = 30, length = unit(0.03, "npc"), ends = "first"), lwd = 0.6) + 
+  geom_curve(aes(x = 2, y = 325, xend = 2.35, yend=380), curvature = -0.45, angle = 90, 
+             arrow = arrow(angle = 30, length = unit(0.03, "npc"), ends = "first"), lwd = 0.6) + 
   annotate("text", x = 3, y = 380, label = "Median Preferred\nMinimum Wage", family = "Quattrocento") +
-  geom_curve(aes(x = 4, y = 145, xend = 4.35, yend=200), curvature = -0.45, angle = 90 , arrow = arrow(angle = 30, length = unit(0.03, "npc"), ends = "first"), lwd = 0.6) + 
-    geom_hline(aes(yintercept = 0)) + 
+  geom_curve(aes(x = 4, y = 145, xend = 4.35, yend=200), curvature = -0.45, angle = 90 , 
+             arrow = arrow(angle = 30, length = unit(0.03, "npc"), ends = "first"), lwd = 0.6) + 
+  geom_hline(aes(yintercept = 0)) + 
   annotate("text", x = 5, y = 200, label = "Current Federal\nMinimum Wage", family = "Quattrocento") +
-  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(), legend.position = "none") +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        legend.position = "none") +
   labs(caption = "Hill-HarrisX Poll\nJanuary 19-20, 2019\nN = 1000")
 ```
 
@@ -142,9 +151,13 @@ ggplot(min_wage_party, aes(x=Position, y = Prop, fill = Color)) + geom_col() +
   xlab("\nPreferred Minimum Wage") +
   scale_fill_manual(values=c("2" = "#458490", "1" = "#342c5c", "0" = "#cbd3a3")) +
   scale_y_continuous("", limits = c(0, .55), labels = NULL) +
-  geom_curve(aes(x = x_curve_start, y = y_curve_start, xend = x_curve_end, yend=y_curve_end), curvature = -0.45, angle = 90, arrow = arrow(angle = 30, length = unit(0.03, "npc"), ends = "first"), lwd = 0.6, data = annotation_df, inherit.aes=FALSE) + 
+  geom_curve(aes(x = x_curve_start, y = y_curve_start, xend = x_curve_end, yend=y_curve_end), 
+             curvature = -0.45, angle = 90, 
+             arrow = arrow(angle = 30, length = unit(0.03, "npc"), ends = "first"),
+             lwd = 0.6, data = annotation_df, inherit.aes=FALSE) + 
   geom_hline(aes(yintercept = 0)) + 
-  geom_text(aes(x = x_label, y = y_label, label = "Median Preferred\nMinimum Wage"), family = "Quattrocento", data = annotation_df, inherit.aes=FALSE) +
+  geom_text(aes(x = x_label, y = y_label, label = "Median Preferred\nMinimum Wage"), 
+            family = "Quattrocento", data = annotation_df, inherit.aes=FALSE) +
   theme(panel.grid.major = element_blank(), 
         panel.grid.minor = element_blank(), 
         legend.position = "none", 
@@ -156,6 +169,7 @@ ggplot(min_wage_party, aes(x=Position, y = Prop, fill = Color)) + geom_col() +
 ---
 ### The Electorate, Parties, and Centrist Positions
 ```{r, echo=FALSE, warning=FALSE, message=FALSE, dpi=1500, fig.width =6, fig.height=6, out.width="520px", fig.align='center'}
+# Originally was redoing Drutman report 2017 here. Leaving code in case we want latr.
 # voter_survey <- haven::read_dta("../data/VOTER_Survey_December16_Release1.dta") %>%
 #   select(presvote16post_2016, 
 #          RIGGED_SYSTEM_3_2016, wealth_2016, taxdoug_2016, govt_reg_2016, imiss_s_2016, imiss_m_2016, gvmt_involment_2016, 
@@ -177,40 +191,43 @@ ggplot(min_wage_party, aes(x=Position, y = Prop, fill = Color)) + geom_col() +
 # social = race_deservemore_2016 + race_tryharder_2016 + race_slave_2016 +  inc_opp_blacks_2016 + ft_muslim_2016 + immi_contribution_2016 + immi_naturalize_2016 + immi_makedifficult_2016 + immi_muslim_2016 + abortview3_2016 + gaymar_2016 + view_transgender_2016
 
 typology_df <- tibble(
-  x_loc = c(0.35, 0.7, 0.8, 0.2, 0.5),
-  y_loc = c(0.475, 0.575, 0.4, 0.2, 0.75),
-  label = c("Electorate\nCentrism", "Bipartisan\nCentrism", "Elite\nCentrism", "Democratic\nPartisan\nCentrism", "Republican\nPartisan\nCentrism")
-)
+  x_loc       = c(0.35,  0.7,   0.8, 0.2, 0.5),
+  y_loc       = c(0.475, 0.575, 0.4, 0.2, 0.75),
+  label       = c("Electorate\nCentrism", "Bipartisan\nCentrism", "Elite\nCentrism", 
+                  "Democratic\nPartisan\nCentrism", "Republican\nPartisan\nCentrism")
+  )
 electorate_df <- tibble(
-  x_loc = c(0.2, 0.5),
-  y_loc = c(0.2, 0.75 ),
-  radius = c(0.25, 0.25),
-  affiliation = factor(c("Democratic\nElectorate", "Republican\nElectorate"))) %>% 
-    mutate(affiliation = relevel(affiliation, "Republican\nElectorate"))
+  x_loc       = c(0.2,  0.5),
+  y_loc       = c(0.2,  0.75 ),
+  radius      = c(0.25, 0.25),
+  affiliation = factor(c("Democratic\nElectorate", "Republican\nElectorate"))
+  ) %>% 
+  mutate(affiliation = relevel(affiliation, "Republican\nElectorate"))
+
 party_df <- tibble(
-  x_loc = c(0.55, 0.85),
-  y_loc = c(0.3, 0.85),
-  radius = c(0.1, 0.1),
-  party = factor(c("Democratic\nParty", "Republican\nParty"))
-) %>% mutate(party = relevel(party, "Republican\nParty"))
+  x_loc       = c(0.55, 0.85),
+  y_loc       = c(0.3,  0.85),
+  radius      = c(0.1,  0.1),
+  party       = factor(c("Democratic\nParty", "Republican\nParty"))
+  ) %>% mutate(party = relevel(party, "Republican\nParty"))
+
 axis_arrows <- tibble(
-  x_start = c(0.2,0.8,-0.1,-0.1),
-  x_end = c(0.1, 0.9, -0.1, -0.1),
-  y_start = c(-0.1, -0.1, 0.2, 0.8),
-  y_end = c(-0.1, -0.1, 0.1, 0.9)
-)
+  x_start     = c( 0.2,  0.8, -0.1, -0.1),
+  x_end       = c( 0.1,  0.9, -0.1, -0.1),
+  y_start     = c(-0.1, -0.1,  0.2,  0.8),
+  y_end       = c(-0.1, -0.1,  0.1,  0.9)
+  )
 axis_text <- tibble(
-  x = c(0.225, 0.775, -0.1, -0.1),
-  y = c(-0.1, -0.1, 0.225, 0.775),
-  hjust = c(0,1,0,1),
-  angle = c(0,0,90,90),
-  label = c("Liberal", "Conservative", "Liberal", "Conservative")
-) 
+  x           = c( 0.225, 0.775, -0.1,  -0.1),
+  y           = c(-0.1,  -0.1,    0.225, 0.775),
+  hjust       = c( 0,     1,      0,     1),
+  angle       = c( 0,     0,      90,    90),
+  label       = c("Liberal", "Conservative", "Liberal", "Conservative")
+  ) 
+
 ggplot(typology_df, aes(x=x_loc, y=y_loc, label = label)) + 
   geom_point() +
   coord_fixed(xlim=c(-0.1,1), ylim=c(-0.1,1)) +
-  # geom_hline(aes(yintercept = .5), alpha = 0.3) +  
-  # geom_vline(aes(xintercept = .5), alpha = 0.3) + 
   geom_circle(aes(x0 = x_loc, y0 = y_loc, r = radius, fill = affiliation),
               color=NA, data = electorate_df, inherit.aes = F, alpha=0.3) +
   geom_circle(aes(x0 = x_loc, y0 = y_loc, r = radius, fill = party),
@@ -231,7 +248,8 @@ ggplot(typology_df, aes(x=x_loc, y=y_loc, label = label)) +
   theme(panel.grid.major = element_blank(),
         panel.grid.minor = element_blank(),
         legend.position = "none",
-        axis.text = element_blank(), axis.title = element_text(size = rel(1.4)))
+        axis.text = element_blank(), 
+        axis.title = element_text(size = rel(1.4)))
 
 
 ```
