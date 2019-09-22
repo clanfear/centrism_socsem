@@ -105,7 +105,7 @@ ggplot(min_wage, aes(x=Position, y = All, fill = Color)) + geom_col() +
   geom_curve(aes(x = 4, y = 145, xend = 4.35, yend=200), curvature = -0.45, angle = 90 , 
              arrow = arrow(angle = 30, length = unit(0.03, "npc"), ends = "first"), lwd = 0.6) + 
   geom_hline(aes(yintercept = 0)) + 
-  annotate("text", x = 5, y = 200, label = "Current Federal\nMinimum Wage", family = "Quattrocento") +
+  annotate("text", x = 4.95, y = 200, label = "Current Federal\nMinimum Wage", family = "Quattrocento") +
   theme(panel.grid.major = element_blank(),
         panel.grid.minor = element_blank(),
         legend.position = "none") +
