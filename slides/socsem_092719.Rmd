@@ -24,7 +24,7 @@ library(xaringanthemer)
 source("./centrism_css.R")
 ```
 
-# Slide With Curves
+# Electorate Centrism
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE, fig.width =7, fig.height=3, dpi = 1500}
 library(dplyr)
@@ -72,6 +72,137 @@ plot_right <- tibble(x = rep(seq(-4, 4, length.out = 100),2),
 
 plot_left + plot_right
 ```
+
+---
+## Bipartisan Compromise Centrism
+
+---
+## Nonpartisan Technocratic Centrism
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE, fig.width =7, fig.height=4.5, dpi = 1500}
+
+# Put NTC in "space of enlightement" glowing over top
+tibble(x = rep(seq(-4, 4, length.out = 100),2),
+                     density = dnorm(x, mean=0, sd=1.5), 
+                     group = rep(c(-3,3), each=length(x)/2),
+                     xpos = x + group,
+                     facet=2) %>%
+  ggplot(aes(x = xpos, y = density, group = group)) + 
+  geom_line(lwd=1.5) + 
+  scale_x_continuous("Preferences", breaks = c(-7, 7), labels = c("Left", "Right")) + 
+  ylab("") + 
+  scale_y_continuous(limits = c(0, 0.7), labels = NULL) +
+  geom_hline(aes(yintercept = 0)) + 
+  theme_minimal(base_family = "Quattrocento") + 
+  geom_text(aes(x= 3, y = 0.65, label = "Place of Enlightenment"), family = "Quattrocento", nudge_x = -2, nudge_y = -.1) +
+  geom_point(aes(x = 3, y =0.65), inherit.aes = F) +
+  geom_curve(aes(x = 1, y = 0.57, xend = 2.8, yend=0.65), curvature = -0.45, angle = 90, 
+             arrow = arrow(angle = 30, length = unit(0.03, "npc"), ends = "last"), lwd = 0.6) + 
+  geom_segment(aes(x = -2.75, y = 0.275, xend = -1, yend=0.34), 
+               arrow = arrow(angle = 30, length = unit(0.03, "npc"), ends = "first"), lwd = 0.6) + 
+  geom_segment(aes(x = 2.75, y = 0.275, xend = 1, yend=0.34), 
+               arrow = arrow(angle = 30, length = unit(0.03, "npc"), ends = "first"), lwd = 0.6) + 
+  annotate("text", x = 0, y = 0.36, label = "Irrational\nPartisans", family = "Quattrocento") +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank())
+```
+
+---
+## Business Elite Centrism
+
+---
+### The Electorate, Parties, and Centrist Positions
+```{r, echo=FALSE, warning=FALSE, message=FALSE, dpi=1500, fig.width =6, fig.height=6, out.width="520px", fig.align='center'}
+# Originally was redoing Drutman report 2017 here. Leaving code in case we want latr.
+# voter_survey <- haven::read_dta("../data/VOTER_Survey_December16_Release1.dta") %>%
+#   select(presvote16post_2016, 
+#          RIGGED_SYSTEM_3_2016, wealth_2016, taxdoug_2016, govt_reg_2016, imiss_s_2016, imiss_m_2016, gvmt_involment_2016, 
+#          race_deservemore_2016, race_tryharder_2016, race_slave_2016,  inc_opp_blacks_2016, 
+#          ft_muslim_2016, immi_contribution_2016, immi_naturalize_2016, immi_makedifficult_2016, 
+#          immi_muslim_2016, abortview3_2016, gaymar_2016, view_transgender_2016) %>%
+#   mutate_at(vars(-ft_muslim_2016), ~ forcats::as_factor(.)) %>%
+#   filter(presvote16post_2016!=7) %>%
+#   mutate(Vote = case_when(
+#     presvote16post_2016=="Hillary Clinton" ~ "Clinton",
+#     presvote16post_2016=="Donald Trump" ~ "Trump",
+#     TRUE ~ "Other"
+#   )) 
+# 
+# # An economic liberalism-conservatism index (which combines views on the social safety net, trade, inequality, and active government)
+# # A social/identity liberalism-conservatism politics index (which combines the moral issues index plus views toward African-Americans, immigrants, and Muslims).
+# 
+# economic = RIGGED_SYSTEM_3_2016 + wealth_2016 + taxdoug_2016 + govt_reg_2016 + imiss_s_2016 + imiss_m_2016 + gvmt_involment_2016
+# social = race_deservemore_2016 + race_tryharder_2016 + race_slave_2016 +  inc_opp_blacks_2016 + ft_muslim_2016 + immi_contribution_2016 + immi_naturalize_2016 + immi_makedifficult_2016 + immi_muslim_2016 + abortview3_2016 + gaymar_2016 + view_transgender_2016
+
+typology_df <- tibble(
+  x_loc       = c(0.35,  0.7,   0.8, 0.2, 0.5),
+  y_loc       = c(0.475, 0.575, 0.4, 0.2, 0.75),
+  label       = c("Electorate", "Bipartisan\nCompromise", "Business\nElite", 
+                  "Democratic\nPartisan", "Republican\nPartisan")
+  )
+electorate_df <- tibble(
+  x_loc       = c(0.2,  0.5),
+  y_loc       = c(0.2,  0.75 ),
+  radius      = c(0.25, 0.25),
+  affiliation = factor(c("Democratic\nElectorate", "Republican\nElectorate"))
+  ) %>% 
+  mutate(affiliation = relevel(affiliation, "Republican\nElectorate"))
+
+party_df <- tibble(
+  x_loc       = c(0.55, 0.85),
+  y_loc       = c(0.3,  0.85),
+  radius      = c(0.1,  0.1),
+  party       = factor(c("Democratic\nParty", "Republican\nParty"))
+  ) %>% mutate(party = relevel(party, "Republican\nParty"))
+
+axis_arrows <- tibble(
+  x_start     = c( 0.2,  0.8, -0.1, -0.1),
+  x_end       = c( 0.1,  0.9, -0.1, -0.1),
+  y_start     = c(-0.1, -0.1,  0.2,  0.8),
+  y_end       = c(-0.1, -0.1,  0.1,  0.9)
+  )
+axis_text <- tibble(
+  x           = c( 0.225, 0.775, -0.1,  -0.1),
+  y           = c(-0.1,  -0.1,    0.225, 0.775),
+  hjust       = c( 0,     1,      0,     1),
+  angle       = c( 0,     0,      90,    90),
+  label       = c("Liberal", "Conservative", "Liberal", "Conservative")
+  ) 
+
+ggplot(typology_df, aes(x=x_loc, y=y_loc, label = label)) + 
+  geom_point() +
+  coord_fixed(xlim=c(-0.1,1), ylim=c(-0.1,1)) +
+  geom_circle(aes(x0 = x_loc, y0 = y_loc, r = radius, fill = affiliation),
+              color=NA, data = electorate_df, inherit.aes = F, alpha=0.3) +
+  geom_circle(aes(x0 = x_loc, y0 = y_loc, r = radius, fill = party),
+              color=NA, data = party_df, inherit.aes = F, alpha=0.6) +
+  geom_text(nudge_x = 0.01, nudge_y = -0.01, family = "Quattrocento", fontface="bold", hjust=0, vjust=1) + 
+  geom_text(aes(label=party), family = "Quattrocento", data = party_df) + 
+  geom_text(aes(label=affiliation), family = "Quattrocento", data = electorate_df, nudge_y = 0.15) + 
+  scale_fill_manual(values = c("Democratic\nElectorate" = "blue", 
+                               "Democratic\nParty" = "blue", 
+                               "Republican\nElectorate" = "red", 
+                               "Republican\nParty" ="red")) +
+  geom_segment(aes(x = x_start, y = y_start, xend = x_end, yend=y_end), data = axis_arrows,
+               arrow = arrow(angle = 30, length = unit(0.03, "npc"), ends = "last"), lwd = 0.6, inherit.aes = F) +
+  geom_text(aes(x=x, y =y, label=label, angle = angle, hjust=hjust), size = 5,
+            data = axis_text, inherit.aes = F, family = "Quattrocento") +
+  theme_minimal(base_family = "Quattrocento") +
+  xlab("Economic Issues") + ylab("Social Issues") +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        legend.position = "none",
+        axis.text = element_blank(), 
+        axis.title = element_text(size = rel(1.4)))
+
+
+```
+
+
+---
+class: inverse
+# Example: Minimum Wage
+
 ---
 # Minimum Wage
 
@@ -167,92 +298,9 @@ ggplot(min_wage_party, aes(x=Position, y = Prop, fill = Color)) + geom_col() +
 ```
 
 ---
-### The Electorate, Parties, and Centrist Positions
-```{r, echo=FALSE, warning=FALSE, message=FALSE, dpi=1500, fig.width =6, fig.height=6, out.width="520px", fig.align='center'}
-# Originally was redoing Drutman report 2017 here. Leaving code in case we want latr.
-# voter_survey <- haven::read_dta("../data/VOTER_Survey_December16_Release1.dta") %>%
-#   select(presvote16post_2016, 
-#          RIGGED_SYSTEM_3_2016, wealth_2016, taxdoug_2016, govt_reg_2016, imiss_s_2016, imiss_m_2016, gvmt_involment_2016, 
-#          race_deservemore_2016, race_tryharder_2016, race_slave_2016,  inc_opp_blacks_2016, 
-#          ft_muslim_2016, immi_contribution_2016, immi_naturalize_2016, immi_makedifficult_2016, 
-#          immi_muslim_2016, abortview3_2016, gaymar_2016, view_transgender_2016) %>%
-#   mutate_at(vars(-ft_muslim_2016), ~ forcats::as_factor(.)) %>%
-#   filter(presvote16post_2016!=7) %>%
-#   mutate(Vote = case_when(
-#     presvote16post_2016=="Hillary Clinton" ~ "Clinton",
-#     presvote16post_2016=="Donald Trump" ~ "Trump",
-#     TRUE ~ "Other"
-#   )) 
-# 
-# # An economic liberalism-conservatism index (which combines views on the social safety net, trade, inequality, and active government)
-# # A social/identity liberalism-conservatism politics index (which combines the moral issues index plus views toward African-Americans, immigrants, and Muslims).
-# 
-# economic = RIGGED_SYSTEM_3_2016 + wealth_2016 + taxdoug_2016 + govt_reg_2016 + imiss_s_2016 + imiss_m_2016 + gvmt_involment_2016
-# social = race_deservemore_2016 + race_tryharder_2016 + race_slave_2016 +  inc_opp_blacks_2016 + ft_muslim_2016 + immi_contribution_2016 + immi_naturalize_2016 + immi_makedifficult_2016 + immi_muslim_2016 + abortview3_2016 + gaymar_2016 + view_transgender_2016
+class: inverse
+# Intermission Slide
 
-typology_df <- tibble(
-  x_loc       = c(0.35,  0.7,   0.8, 0.2, 0.5),
-  y_loc       = c(0.475, 0.575, 0.4, 0.2, 0.75),
-  label       = c("Electorate\nCentrism", "Bipartisan\nCentrism", "Elite\nCentrism", 
-                  "Democratic\nPartisan\nCentrism", "Republican\nPartisan\nCentrism")
-  )
-electorate_df <- tibble(
-  x_loc       = c(0.2,  0.5),
-  y_loc       = c(0.2,  0.75 ),
-  radius      = c(0.25, 0.25),
-  affiliation = factor(c("Democratic\nElectorate", "Republican\nElectorate"))
-  ) %>% 
-  mutate(affiliation = relevel(affiliation, "Republican\nElectorate"))
-
-party_df <- tibble(
-  x_loc       = c(0.55, 0.85),
-  y_loc       = c(0.3,  0.85),
-  radius      = c(0.1,  0.1),
-  party       = factor(c("Democratic\nParty", "Republican\nParty"))
-  ) %>% mutate(party = relevel(party, "Republican\nParty"))
-
-axis_arrows <- tibble(
-  x_start     = c( 0.2,  0.8, -0.1, -0.1),
-  x_end       = c( 0.1,  0.9, -0.1, -0.1),
-  y_start     = c(-0.1, -0.1,  0.2,  0.8),
-  y_end       = c(-0.1, -0.1,  0.1,  0.9)
-  )
-axis_text <- tibble(
-  x           = c( 0.225, 0.775, -0.1,  -0.1),
-  y           = c(-0.1,  -0.1,    0.225, 0.775),
-  hjust       = c( 0,     1,      0,     1),
-  angle       = c( 0,     0,      90,    90),
-  label       = c("Liberal", "Conservative", "Liberal", "Conservative")
-  ) 
-
-ggplot(typology_df, aes(x=x_loc, y=y_loc, label = label)) + 
-  geom_point() +
-  coord_fixed(xlim=c(-0.1,1), ylim=c(-0.1,1)) +
-  geom_circle(aes(x0 = x_loc, y0 = y_loc, r = radius, fill = affiliation),
-              color=NA, data = electorate_df, inherit.aes = F, alpha=0.3) +
-  geom_circle(aes(x0 = x_loc, y0 = y_loc, r = radius, fill = party),
-              color=NA, data = party_df, inherit.aes = F, alpha=0.6) +
-  geom_text(nudge_x = 0.01, nudge_y = -0.01, family = "Quattrocento", fontface="bold", hjust=0, vjust=1) + 
-  geom_text(aes(label=party), family = "Quattrocento", data = party_df) + 
-  geom_text(aes(label=affiliation), family = "Quattrocento", data = electorate_df, nudge_y = 0.15) + 
-  scale_fill_manual(values = c("Democratic\nElectorate" = "blue", 
-                               "Democratic\nParty" = "blue", 
-                               "Republican\nElectorate" = "red", 
-                               "Republican\nParty" ="red")) +
-  geom_segment(aes(x = x_start, y = y_start, xend = x_end, yend=y_end), data = axis_arrows,
-               arrow = arrow(angle = 30, length = unit(0.03, "npc"), ends = "last"), lwd = 0.6, inherit.aes = F) +
-  geom_text(aes(x=x, y =y, label=label, angle = angle, hjust=hjust), size = 5,
-            data = axis_text, inherit.aes = F, family = "Quattrocento") +
-  theme_minimal(base_family = "Quattrocento") +
-  xlab("Economic Issues") + ylab("Social Issues") +
-  theme(panel.grid.major = element_blank(),
-        panel.grid.minor = element_blank(),
-        legend.position = "none",
-        axis.text = element_blank(), 
-        axis.title = element_text(size = rel(1.4)))
-
-
-```
 
 ---
 # Second Slide Title
