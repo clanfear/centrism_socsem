@@ -25,11 +25,23 @@ source("./centrism_css.R")
 
 What is centrism?
 ---
-# Democracy in America?
+.image-full[
+<img src="https://clanfear.github.io/centrism_socsem/slides/img/democracy_in_america.PNG">
+]
 
-![](https://clanfear.github.io/centrism_socsem/slides/img/democracy_in_america.PNG)
 ---
-![](https://clanfear.github.io/centrism_socsem/slides/img/out_of_step.jpeg)
+.image-full[
+<img src="https://clanfear.github.io/centrism_socsem/slides/img/out_of_step.jpeg">
+]
+
+---
+.image-full[
+<img src="https://clanfear.github.io/centrism_socsem/slides/img/adler.jpeg">
+]
+
+---
+
+
 ---
 class: inverse
 # Typology of Centrism
