@@ -1,7 +1,8 @@
 ---
 title: "Searching for the Center"
-subtitle: "Defining centrism in US Politics"
+subtitle: "An inductive analysis of political centrism in America"
 author: "Steve Karceski<br>Chuck Lanfear<br>Kivan Polimis"
+date: "September 27th, 2019"
 output:
   xaringan::moon_reader:
     lib_dir: libs
@@ -23,26 +24,44 @@ library(xaringanthemer)
 source("./centrism_css.R")
 ```
 
+<br>
 .image-full[
 <img src="https://clanfear.github.io/centrism_socsem/slides/img/democracy_in_america.PNG">
 ]
 
 ---
+<br>
 .image-full[
 <img src="https://clanfear.github.io/centrism_socsem/slides/img/out_of_step.jpeg">
 ]
 
 ---
+<br>
 .image-full[
 <img src="https://clanfear.github.io/centrism_socsem/slides/img/adler.jpeg">
 ]
 
 ---
 <br>
-<br>
 .image-full[
 <img src="https://clanfear.github.io/centrism_socsem/slides/img/schultz.jpg">
 ]
+
+---
+# Data Sources
+
+* Media
+   + *Washington Post*
+   + *Huffington Post*
+   + *New York Times*
+
+* Organizations
+   + Third Way
+   + The (US) Centrist Party
+
+* Political Science Measures
+   + Americans for Democratic Action Voting Records
+   + Database on Ideology, Money in Politics, and Elections CFscore
 
 ---
 # Themes of Centrism
@@ -56,6 +75,15 @@ source("./centrism_css.R")
 ---
 class: inverse
 # Typology of Centrism
+
+<br>
+### Electorate
+
+### Bipartisan Compromise
+
+### Nonpartisan Technocratic
+
+### Business Elite
 
 ---
 ## Electorate Centrism
@@ -179,6 +207,8 @@ tibble(x = rep(seq(-4, 4, length.out = 100),2),
 
 .smallish[
 "Republicans are not the enemy... It’s the blind partisanship within the Republican Party and the blind partisanship within the Democratic Party..."<br>- Joe Cunningham, quoted by Kevin Robillard, *Huffington Post*
+
+"Centrists are independent thinkers. They gauge situations based on context and reason, consideration and probability. They are open minded and exercise conviction. Willing to fight for reason as opposed to ideology."<br>- The (US) Centrist Party
 ]
 
 ---
@@ -201,7 +231,7 @@ tibble(x = seq(-4, 4, length.out = 100), xpos=x, group = 0,
 ```
 
 .smallish[
-"[Centrists are] fiscally conservative, socially liberal, open borders on trade and immigration, restrictive on gun rights, hawkish on foreign policy, and not crazy about raising taxes."<br>- Simon van Zuylen, *Washington Post*
+"...fiscally conservative, socially liberal, open borders on trade and immigration, restrictive on gun rights, hawkish on foreign policy, and not crazy about raising taxes."<br>- Simon van Zuylen, *Washington Post*
 ]
 
 ---
@@ -414,7 +444,7 @@ class: inverse
 # Third Way?
 
 ---
-# Image
+# Party Identification
 
 ![](https://clanfear.github.io/centrism_socsem/slides/img/partisanship_over_time.jpeg)
 
@@ -425,3 +455,12 @@ class: inverse
 .image-full[
 <img src="https://clanfear.github.io/centrism_socsem/slides/img/green_new_deal.jpg">
 ]
+
+---
+# Gilens & Page (2014)
+
+.image-full[
+<img src="https://clanfear.github.io/centrism_socsem/slides/img/gilens_page.png">
+]
+
+
