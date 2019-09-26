@@ -23,6 +23,11 @@ library(xaringanthemer)
 source("./centrism_css.R")
 ```
 
+What is centrism?
+---
+# Democracy in America?
+
+![](https://clanfear.github.io/centrism_socsem/slides/img/democracy_in_america.PNG)
 
 ---
 class: inverse
@@ -80,7 +85,9 @@ plot_right <- tibble(x = rep(seq(-4, 4, length.out = 100),2),
 plot_left + plot_right
 ```
 
+.smallish[
 "I’d like to see somebody come in and make the case for electing a more moderate candidate, and I believe that if the Democrats want to beat President Trump, their best bet is electing somebody in the middle."<br>- Governor John Lynch, quoted by Alexander Burns, *New York Times*
+]
 
 ---
 ## Bipartisan Compromise Centrism
@@ -148,7 +155,9 @@ tibble(x = rep(seq(-4, 4, length.out = 100),2),
         panel.grid.minor = element_blank())
 ```
 
-"I am a turbocunt"<br>- Ben Shapiro
+.smallish[
+"Republicans are not the enemy... It’s the blind partisanship within the Republican Party and the blind partisanship within the Democratic Party..."<br>- Joe Cunningham, quoted by Kevin Robillard, *Huffington Post*
+]
 
 ---
 ## Business Elite Centrism
@@ -169,7 +178,9 @@ tibble(x = seq(-4, 4, length.out = 100), xpos=x, group = 0,
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
 ```
 
-"A quote that exemplifies Business Elite Centrism"<br>-Not Ben Shapiro
+.smallish[
+"[Centrists are] fiscally conservative, socially liberal, open borders on trade and immigration, restrictive on gun rights, hawkish on foreign policy, and not crazy about raising taxes."<br>- Simon van Zuylen, *Washington Post*
+]
 
 ---
 ### The Electorate, Parties, and Centrist Positions
@@ -383,9 +394,7 @@ class: inverse
 ---
 # Image
 
-```{r, echo=FALSE}
-knitr::include_graphics("../slides/img/partisanship_over_time.jpeg")
-```
+![](https://clanfear.github.io/centrism_socsem/slides/img/partisanship_over_time.jpeg)
 
 
 
