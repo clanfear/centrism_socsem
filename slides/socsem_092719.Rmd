@@ -473,4 +473,11 @@ class: inverse
 <img src="https://clanfear.github.io/centrism_socsem/slides/img/issue_picking.jpg">
 ]
 
+---
+## Dimension and 2016 Vote
+
+.image-full[
+<img src="https://clanfear.github.io/centrism_socsem/slides/img/dimensions.jpg">
+]
+
 
