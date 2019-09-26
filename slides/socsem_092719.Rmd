@@ -38,21 +38,29 @@ source("./centrism_css.R")
 ]
 
 ---
+<br>
+<br>
 .image-full[
-<img src="https://clanfear.github.io/centrism_socsem/slides/img/schultz.jpeg">
+<img src="https://clanfear.github.io/centrism_socsem/slides/img/schultz.jpg">
 ]
 
+---
+# Themes of Centrism
+
+* Centrism is *good*.
+
+* Centrism is the opposite of *extreme*.
+
+* Centrism is *not* populism.
 
 ---
 class: inverse
 # Typology of Centrism
 
 ---
-
----
 ## Electorate Centrism
 
-```{r, echo=FALSE, message=FALSE, warning=FALSE, fig.width =7, fig.height=3, dpi = 1500}
+```{r, echo=FALSE, message=FALSE, warning=FALSE, fig.width =7, fig.height=3, dpi = 1500, cache=TRUE}
 library(dplyr)
 library(tidyr)
 library(ggplot2)
@@ -106,7 +114,7 @@ plot_left + plot_right
 ---
 ## Bipartisan Compromise Centrism
 
-```{r, echo=FALSE, message=FALSE, warning=FALSE, fig.width =7, fig.height=3, dpi = 1500}
+```{r, echo=FALSE, message=FALSE, warning=FALSE, fig.width =7, fig.height=3, dpi = 1500, cache=TRUE}
 
 # Put NTC in "space of enlightement" glowing over top
 tibble(x = rep(seq(-4, 4, length.out = 100),2),
@@ -137,7 +145,7 @@ tibble(x = rep(seq(-4, 4, length.out = 100),2),
 ---
 ## Nonpartisan Technocratic Centrism
 
-```{r, echo=FALSE, message=FALSE, warning=FALSE, fig.width =7, fig.height=3, dpi = 1500}
+```{r, echo=FALSE, message=FALSE, warning=FALSE, fig.width =7, fig.height=3, dpi = 1500, cache=TRUE}
 
 # Put NTC in "space of enlightement" glowing over top
 tibble(x = rep(seq(-4, 4, length.out = 100),2),
@@ -176,7 +184,7 @@ tibble(x = rep(seq(-4, 4, length.out = 100),2),
 ---
 ## Business Elite Centrism
 
-```{r, echo=FALSE, message=FALSE, warning=FALSE, fig.width =7, fig.height=3, dpi = 1500}
+```{r, echo=FALSE, message=FALSE, warning=FALSE, fig.width =7, fig.height=3, dpi = 1500, cache=TRUE}
 tibble(x = seq(-4, 4, length.out = 100), xpos=x, group = 0,
                     facet= 1, density = dnorm(x, mean=0, sd=1.5)) %>%
   ggplot(aes(x = xpos, y = density)) + 
@@ -198,7 +206,7 @@ tibble(x = seq(-4, 4, length.out = 100), xpos=x, group = 0,
 
 ---
 ### The Electorate, Parties, and Centrist Positions
-```{r, echo=FALSE, warning=FALSE, message=FALSE, dpi=1500, fig.width =6, fig.height=6, out.width="520px", fig.align='center', cache=TRUE}
+```{r, echo=FALSE, warning=FALSE, message=FALSE, dpi=1500, fig.width =6, fig.height=6, out.width="520px", fig.align='center', cache=TRUE, cache=TRUE}
 # Originally was redoing Drutman report 2017 here. Leaving code in case we want latr.
 # voter_survey <- haven::read_dta("../data/VOTER_Survey_December16_Release1.dta") %>%
 #   select(presvote16post_2016, 
@@ -293,7 +301,7 @@ class: inverse
 ---
 # Minimum Wage
 
-```{r, echo=FALSE, warning=FALSE, message=FALSE, dpi=1500, fig.width =7, fig.height=3}
+```{r, echo=FALSE, warning=FALSE, message=FALSE, dpi=1500, fig.width =7, fig.height=3, cache=TRUE}
 min_wage <- readxl::read_excel("../data/min_wage_extract.xlsx") %>% 
   select(Measure, All) %>% 
   filter(Measure !="Sample Size") %>% 
@@ -335,7 +343,7 @@ Voters' median preferred wage is over double the current federal minimum wage.
 ---
 # Minimum Wage by Party
 
-```{r, echo=FALSE, warning=FALSE, message=FALSE, dpi=1500, fig.width =7, fig.height=5, out.width="700px"}
+```{r, echo=FALSE, warning=FALSE, message=FALSE, dpi=1500, fig.width =7, fig.height=5, out.width="700px", cache=TRUE}
 min_wage_party <- readxl::read_excel("../data/min_wage_extract.xlsx") %>% 
   select(Measure, Republican, Democrat) %>% 
   filter(Measure !="Sample Size") %>% 
@@ -411,4 +419,9 @@ class: inverse
 ![](https://clanfear.github.io/centrism_socsem/slides/img/partisanship_over_time.jpeg)
 
 
+---
+# Green New Deal
 
+.image-full[
+<img src="https://clanfear.github.io/centrism_socsem/slides/img/green_new_deal.jpg">
+]
