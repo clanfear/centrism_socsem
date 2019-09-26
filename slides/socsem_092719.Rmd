@@ -23,8 +23,6 @@ library(xaringanthemer)
 source("./centrism_css.R")
 ```
 
-What is centrism?
----
 .image-full[
 <img src="https://clanfear.github.io/centrism_socsem/slides/img/democracy_in_america.PNG">
 ]
@@ -40,6 +38,9 @@ What is centrism?
 ]
 
 ---
+.image-full[
+<img src="https://clanfear.github.io/centrism_socsem/slides/img/schultz.jpeg">
+]
 
 
 ---
