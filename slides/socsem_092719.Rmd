@@ -2,7 +2,6 @@
 title: "Searching for the Center"
 subtitle: "Defining centrism in US Politics"
 author: "Steve Karceski<br>Chuck Lanfear<br>Kivan Polimis"
-date: "Sep 27, 2019<br>Updated: `r gsub(' 0', ' ', format(Sys.Date(), format='%b %d, %Y'))`"
 output:
   xaringan::moon_reader:
     lib_dir: libs
@@ -24,6 +23,14 @@ library(xaringanthemer)
 source("./centrism_css.R")
 ```
 
+
+---
+class: inverse
+# Typology of Centrism
+
+---
+
+---
 ## Electorate Centrism
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE, fig.width =7, fig.height=3, dpi = 1500}
@@ -73,7 +80,7 @@ plot_right <- tibble(x = rep(seq(-4, 4, length.out = 100),2),
 plot_left + plot_right
 ```
 
-"A quote that exemplifies Electorate and/or Partisan Electorate Centrism"<br>- Not Ben Shapiro
+"I’d like to see somebody come in and make the case for electing a more moderate candidate, and I believe that if the Democrats want to beat President Trump, their best bet is electing somebody in the middle."<br>- Governor John Lynch, quoted by Alexander Burns, *New York Times*
 
 ---
 ## Bipartisan Compromise Centrism
@@ -100,7 +107,11 @@ tibble(x = rep(seq(-4, 4, length.out = 100),2),
         panel.grid.minor = element_blank())
 ```
 
-"A quote that exemplifies Bipartisan Compromise Centrism"<br>- Not Ben Shapiro
+.smallish[
+"In most cases, these Democrats are framing their moderate instincts in terms of political process—stressing their willingness to cooperate with Republicans..."<br>- Alexander Burns, *New York Times*
+
+"In theory, the dearth of moderates means it will be even harder next year for Congress—which failed to put together even mundane measures like farm and highway legislation without a fight this session—to pass bills."<br>- Paul Krugman, *New York Times*
+]
 
 ---
 ## Nonpartisan Technocratic Centrism
@@ -364,7 +375,17 @@ class: inverse
 
 ---
 class: inverse
-# Transition Slide Title
+# Appendices
+
+---
+# Third Way?
+
+---
+# Image
+
+```{r, echo=FALSE}
+knitr::include_graphics("../slides/img/partisanship_over_time.jpeg")
+```
 
 
 
