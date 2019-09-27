@@ -254,7 +254,6 @@ class: inverse
 #### Nonpartisan Technocratic &ne; Electorate Centrism
 
 <br>
-<br>
 
 ```{r, echo=FALSE, warning=FALSE, message=FALSE, dpi=1500, fig.width =7, fig.height=3, cache=TRUE}
 min_wage <- readxl::read_excel("../data/min_wage_extract.xlsx") %>% 
@@ -292,6 +291,8 @@ ggplot(min_wage, aes(x=Position, y = All, fill = Color)) + geom_col() +
         legend.position = "none") +
   labs(caption = "Hill-HarrisX Poll\nJanuary 19-20, 2019\nN = 1000")
 ```
+
+"If wages increase at the same pace as last year, the benchmark minimum will increase to $11.90 in 2020, with the minimum in the highest cost regions set at $13.70 and in the lowest cost areas set at $10.15."<br>-Third Way (2019) "A Regional Minimum Wage" 
 
 ---
 #### Nonpartisan Technocratic &ne; Electorate Centrism
