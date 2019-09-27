@@ -26,7 +26,7 @@ body {
   font-weight: normal;
   color: #272822;
 }
-h1, h2, h3 {
+h1, h2, h3, h4 {
   font-family: Quattrocento;
   font-weight: normal;
   color: #342c5c;
@@ -47,6 +47,9 @@ h1, h2, h3 {
 }
 .remark-slide-content h3 {
     font-size: 35px;
+}
+.remark-slide-content h4 {
+    font-size: 30px;
 }
 .remark-code, .remark-inline-code {
   font-family: Fira Mono, 'Lucida Console', Monaco, monospace;
@@ -207,7 +210,7 @@ table.dataTable.hover tbody tr:hover, table.dataTable.display tbody tr:hover {
 sup {
   font-size: 14px;
 }
-h1, h2, h3 {
+h1, h2, h3, h4 {
   margin-top: .25em;
   margin-bottom: .25em;
 }

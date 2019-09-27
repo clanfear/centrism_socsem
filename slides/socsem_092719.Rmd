@@ -245,23 +245,18 @@ class: inverse
 ---
 ### Bipartisan Compromise &ne; Electorate Centrism
 
-Grand bargain
-
----
-### Nonpartisan Technocratic &ne; Electorate Centrism
-
-<br>
 .image-full[
-<img src="https://clanfear.github.io/centrism_socsem/slides/img/minwage.png">
+<img src="https://clanfear.github.io/centrism_socsem/slides/img/drutman_divide.jpeg">
 ]
 
 ---
 ### Minimum Wage
-```{r, echo=FALSE, warning=FALSE, message=FALSE, dpi=1500, fig.width =7, fig.height=3, cache=TRUE}
-min_wage <- readxl::read_excel("../data/min_wage_extract.xlsx") %>% 
-  select(Measure, All) %>% 
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE, dpi=1500, fig.width =7, fig.height=5, out.width="700px", cache=TRUE}
+min_wage_party <- readxl::read_excel("../data/min_wage_extract.xlsx") %>% 
+  select(Measure, Republican, Democrat) %>% 
   filter(Measure !="Sample Size") %>% 
-  mutate(Measure = factor(Measure)) %>%
+  pivot_longer(-Measure, names_to = "Party", values_to = "Count") %>%
   mutate(Position = factor(case_when(
     Measure == "The minimum wage should immediately be raised to $15 per hour" ~ "$15 (immediate)",
     Measure == "The minimum wage should gradually be raised to $15 per hour" ~ "$15 (gradual)",
@@ -271,31 +266,60 @@ min_wage <- readxl::read_excel("../data/min_wage_extract.xlsx") %>%
     Measure == "The minimum wage should be eliminated" ~ "$0"
   ), levels = c("$15 (immediate)", "$15 (gradual)", "$7.25 - $15","$7.25", "$0 - $7.25", "$0"), ordered=T),
   Color = factor(case_when(
-    Position == "$15 (gradual)" ~ 1,
+    Position == "$15 (gradual)" & Party == "Democrat" ~ 1,
+    Position == "$7.25 - $15" & Party == "Republican" ~ 1,
     Position == "$7.25" ~ 2,
     TRUE ~ 0
-  )))
+  ))) %>%
+  group_by(Party) %>%
+  mutate(Prop = Count / sum(Count))
 
-ggplot(min_wage, aes(x=Position, y = All, fill = Color)) + geom_col() +
+annotation_df <- tibble(x_curve_start = c(2,3,4), 
+                        x_curve_end = c(2.35, 3.35, 4.35), 
+                        y_curve_start = c(.41, .35, .06),
+                        y_curve_end = c(.49, .43, .14),
+                        x_label = c(3, 4, 5),
+                        y_label = c(.49, .43, .14),
+                        label = c(
+                          "Median Preferred\nMinimum Wage",
+                          "Median Preferred\nMinimum Wage",
+                          "Current Federal\nMinimum Wage"
+                        ),
+                        Party = c("Democrat", "Republican", "Democrat"))
+
+ggplot(min_wage_party, aes(x=Position, y = Prop, fill = Color)) + geom_col() +
+  facet_wrap(~ Party, ncol=1, nrow =2, strip.position = "left") +
   theme_minimal(base_family = "Quattrocento") + 
   xlab("\nPreferred Minimum Wage") +
   scale_fill_manual(values=c("2" = "#458490", "1" = "#342c5c", "0" = "#cbd3a3")) +
-  scale_y_continuous("", limits = c(0, 400), labels = NULL) +
-  geom_curve(aes(x = 2, y = 325, xend = 2.35, yend=380), curvature = -0.45, angle = 90, 
-             arrow = arrow(angle = 30, length = unit(0.03, "npc"), ends = "first"), lwd = 0.6) + 
-  annotate("text", x = 3, y = 380, label = "Median Preferred\nMinimum Wage", family = "Quattrocento") +
-  geom_curve(aes(x = 4, y = 145, xend = 4.35, yend=200), curvature = -0.45, angle = 90 , 
-             arrow = arrow(angle = 30, length = unit(0.03, "npc"), ends = "first"), lwd = 0.6) + 
+  scale_y_continuous("", limits = c(0, .55), labels = NULL) +
+  geom_curve(aes(x = x_curve_start, y = y_curve_start, xend = x_curve_end, yend=y_curve_end), 
+             curvature = -0.45, angle = 90, 
+             arrow = arrow(angle = 30, length = unit(0.03, "npc"), ends = "first"),
+             lwd = 0.6, data = annotation_df, inherit.aes=FALSE) + 
   geom_hline(aes(yintercept = 0)) + 
-  annotate("text", x = 4.95, y = 200, label = "Current Federal\nMinimum Wage", family = "Quattrocento") +
-  theme(panel.grid.major = element_blank(),
-        panel.grid.minor = element_blank(),
-        legend.position = "none") +
+  geom_text(aes(x = x_label, y = y_label, label = label), 
+            family = "Quattrocento", data = annotation_df, inherit.aes=FALSE) +
+  annotate("text", x = 4.95, y = 100, label = "Current Federal\nMinimum Wage", family = "Quattrocento") +
+  theme(panel.grid.major = element_blank(), 
+        panel.grid.minor = element_blank(), 
+        legend.position = "none", 
+        strip.text = element_text(size = rel(1.4), hjust=0.03), 
+        panel.spacing.y = unit(0, "line")) +
   labs(caption = "Hill-HarrisX Poll\nJanuary 19-20, 2019\nN = 1000")
 ```
 
-Voters' median preferred wage is over double the current federal minimum wage.
+For bipartisan compromise centrism to be equivalent to electorate centrism, the positions of the parties would need to be centered over the preferences of their electorates. If these were true, the position of the more economically conservative party should establish a lower bound on the minimum wage. In reality, the current minimum wage is drastically below the median preference of the the Republican electorate.
 
+---
+#### Nonpartisan Technocratic &ne; Electorate Centrism
+
+.image-full[
+<img src="https://clanfear.github.io/centrism_socsem/slides/img/minwage.PNG">
+]
+.smaller[
+Source: *Myth and Measurement*, David Card & Alan B. Krueger
+]
 ---
 ### Business Elite &ne; Electorate Centrism
 
@@ -411,80 +435,37 @@ ggplot(typology_df, aes(x=x_loc, y=y_loc, label = label)) +
 
 ```
 
-
-
-
----
-# Minimum Wage by Party
-
-```{r, echo=FALSE, warning=FALSE, message=FALSE, dpi=1500, fig.width =7, fig.height=5, out.width="700px", cache=TRUE}
-min_wage_party <- readxl::read_excel("../data/min_wage_extract.xlsx") %>% 
-  select(Measure, Republican, Democrat) %>% 
-  filter(Measure !="Sample Size") %>% 
-  pivot_longer(-Measure, names_to = "Party", values_to = "Count") %>%
-  mutate(Position = factor(case_when(
-    Measure == "The minimum wage should immediately be raised to $15 per hour" ~ "$15 (immediate)",
-    Measure == "The minimum wage should gradually be raised to $15 per hour" ~ "$15 (gradual)",
-    Measure == "The minimum wage should be raised to an amount under $15 per hour" ~ "$7.25 - $15",
-    Measure == "The minimum wage should be kept the same" ~ "$7.25",
-    Measure == "The minimum wage should be reduced"  ~ "$0 - $7.25",
-    Measure == "The minimum wage should be eliminated" ~ "$0"
-  ), levels = c("$15 (immediate)", "$15 (gradual)", "$7.25 - $15","$7.25", "$0 - $7.25", "$0"), ordered=T),
-  Color = factor(case_when(
-    Position == "$15 (gradual)" & Party == "Democrat" ~ 1,
-    Position == "$7.25 - $15" & Party == "Republican" ~ 1,
-    Position == "$7.25" ~ 2,
-    TRUE ~ 0
-  ))) %>%
-  group_by(Party) %>%
-  mutate(Prop = Count / sum(Count))
-
-annotation_df <- tibble(x_curve_start = c(2,3), 
-                        x_curve_end = c(2.35, 3.35), 
-                        y_curve_start = c(.41, .36),
-                        y_curve_end = c(.49, .43),
-                        x_label = c(3, 4),
-                        y_label = c(.49, .43),
-                        Party = c("Democrat", "Republican"))
-
-ggplot(min_wage_party, aes(x=Position, y = Prop, fill = Color)) + geom_col() +
-  facet_wrap(~ Party, ncol=1, nrow =2, strip.position = "left") +
-  theme_minimal(base_family = "Quattrocento") + 
-  xlab("\nPreferred Minimum Wage") +
-  scale_fill_manual(values=c("2" = "#458490", "1" = "#342c5c", "0" = "#cbd3a3")) +
-  scale_y_continuous("", limits = c(0, .55), labels = NULL) +
-  geom_curve(aes(x = x_curve_start, y = y_curve_start, xend = x_curve_end, yend=y_curve_end), 
-             curvature = -0.45, angle = 90, 
-             arrow = arrow(angle = 30, length = unit(0.03, "npc"), ends = "first"),
-             lwd = 0.6, data = annotation_df, inherit.aes=FALSE) + 
-  geom_hline(aes(yintercept = 0)) + 
-  geom_text(aes(x = x_label, y = y_label, label = "Median Preferred\nMinimum Wage"), 
-            family = "Quattrocento", data = annotation_df, inherit.aes=FALSE) +
-  theme(panel.grid.major = element_blank(), 
-        panel.grid.minor = element_blank(), 
-        legend.position = "none", 
-        strip.text = element_text(size = rel(1.4), hjust=0.03), 
-        panel.spacing.y = unit(0, "line")) +
-  labs(caption = "Hill-HarrisX Poll\nJanuary 19-20, 2019\nN = 1000")
-```
-
----
-class: inverse
-# Another issue?
-## A more complex issue
-
-
----
-# Two-Columns hake it Up
-
-.pull-left[Some left side stuff]
-.pull-right[Some right side stuff]
-
 ---
 # Why does this matter?
 
+.pull-left[
+#### For science
+* Centrism is understudied in general.
+
+* There is no consensus definition of centrism.
+]
+
+.pull-right[
+#### For public
+
+* Centrism is used in confusing and conflicting ways.
+
+* Conflation of definitions may influence political beliefs of media consumers.
+
+* Use of centrism may constrain political debate.
+]
+
+
 ---
 # Next steps
+
+* Scraping media sources to identify centrists and their positions
+
+* Compare centrists in media to political science 
+
+* Link more into sociological theory
+
+* Who benefits from ambiguity of centrism?
 
 ---
 class: inverse
@@ -497,8 +478,6 @@ Thanks for listening!
 class: inverse
 # Appendices
 
----
-# Third Way?
 
 ---
 # Party Identification
@@ -534,4 +513,46 @@ class: inverse
 <img src="https://clanfear.github.io/centrism_socsem/slides/img/dimensions.jpg">
 ]
 
+---
+### Minimum Wage
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE, dpi=1500, fig.width =7, fig.height=3, cache=TRUE}
+min_wage <- readxl::read_excel("../data/min_wage_extract.xlsx") %>% 
+  select(Measure, All) %>% 
+  filter(Measure !="Sample Size") %>% 
+  mutate(Measure = factor(Measure)) %>%
+  mutate(Position = factor(case_when(
+    Measure == "The minimum wage should immediately be raised to $15 per hour" ~ "$15 (immediate)",
+    Measure == "The minimum wage should gradually be raised to $15 per hour" ~ "$15 (gradual)",
+    Measure == "The minimum wage should be raised to an amount under $15 per hour" ~ "$7.25 - $15",
+    Measure == "The minimum wage should be kept the same" ~ "$7.25",
+    Measure == "The minimum wage should be reduced"  ~ "$0 - $7.25",
+    Measure == "The minimum wage should be eliminated" ~ "$0"
+  ), levels = c("$15 (immediate)", "$15 (gradual)", "$7.25 - $15","$7.25", "$0 - $7.25", "$0"), ordered=T),
+  Color = factor(case_when(
+    Position == "$15 (gradual)" ~ 1,
+    Position == "$7.25" ~ 2,
+    TRUE ~ 0
+  )))
+
+ggplot(min_wage, aes(x=Position, y = All, fill = Color)) + geom_col() +
+  theme_minimal(base_family = "Quattrocento") + 
+  xlab("\nPreferred Minimum Wage") +
+  scale_fill_manual(values=c("2" = "#458490", "1" = "#342c5c", "0" = "#cbd3a3")) +
+  scale_y_continuous("", limits = c(0, 400), labels = NULL) +
+  geom_curve(aes(x = 2, y = 325, xend = 2.35, yend=380), curvature = -0.45, angle = 90, 
+             arrow = arrow(angle = 30, length = unit(0.03, "npc"), ends = "first"), lwd = 0.6) + 
+  annotate("text", x = 3, y = 380, label = "Median Preferred\nMinimum Wage", family = "Quattrocento") +
+  geom_curve(aes(x = 4, y = 145, xend = 4.35, yend=200), curvature = -0.45, angle = 90 , 
+             arrow = arrow(angle = 30, length = unit(0.03, "npc"), ends = "first"), lwd = 0.6) + 
+  annotate("text", x = 4.95, y = 200, label = "Current Federal\nMinimum Wage", family = "Quattrocento") +
+  geom_hline(aes(yintercept = 0)) + 
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        legend.position = "none") +
+  labs(caption = "Hill-HarrisX Poll\nJanuary 19-20, 2019\nN = 1000")
+```
+
+---
+# Partisan Minimum Wage
 
