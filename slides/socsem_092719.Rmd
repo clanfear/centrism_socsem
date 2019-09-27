@@ -79,7 +79,7 @@ library(gt)
 
 * Centrism is *not* populism.
 
-* *It is not consistently related to any policy positions.*
+* *Centrism is not consistently related to any policy positions.*
 
 ---
 class: inverse
@@ -250,7 +250,7 @@ class: inverse
 ]
 
 ---
-### Minimum Wage
+#### Nonpartisan Technocratic &ne; Electorate Centrism
 
 ```{r, echo=FALSE, warning=FALSE, message=FALSE, dpi=1500, fig.width =7, fig.height=5, out.width="700px", cache=TRUE}
 min_wage_party <- readxl::read_excel("../data/min_wage_extract.xlsx") %>% 
@@ -309,8 +309,6 @@ ggplot(min_wage_party, aes(x=Position, y = Prop, fill = Color)) + geom_col() +
   labs(caption = "Hill-HarrisX Poll\nJanuary 19-20, 2019\nN = 1000")
 ```
 
-For bipartisan compromise centrism to be equivalent to electorate centrism, the positions of the parties would need to be centered over the preferences of their electorates. If these were true, the position of the more economically conservative party should establish a lower bound on the minimum wage. In reality, the current minimum wage is drastically below the median preference of the the Republican electorate.
-
 ---
 #### Nonpartisan Technocratic &ne; Electorate Centrism
 
@@ -320,6 +318,7 @@ For bipartisan compromise centrism to be equivalent to electorate centrism, the 
 .smaller[
 Source: *Myth and Measurement*, David Card & Alan B. Krueger
 ]
+
 ---
 ### Business Elite &ne; Electorate Centrism
 
@@ -440,6 +439,7 @@ ggplot(typology_df, aes(x=x_loc, y=y_loc, label = label)) +
 
 .pull-left[
 #### For science
+
 * Centrism is understudied in general.
 
 * There is no consensus definition of centrism.
@@ -452,7 +452,9 @@ ggplot(typology_df, aes(x=x_loc, y=y_loc, label = label)) +
 
 * Conflation of definitions may influence political beliefs of media consumers.
 
-* Use of centrism may constrain political debate.
+* Media use of centrism may constrain political debate.
+
+* Centrism appears to have an economically conservative bias.
 ]
 
 
@@ -553,6 +555,4 @@ ggplot(min_wage, aes(x=Position, y = All, fill = Color)) + geom_col() +
   labs(caption = "Hill-HarrisX Poll\nJanuary 19-20, 2019\nN = 1000")
 ```
 
----
-# Partisan Minimum Wage
 
