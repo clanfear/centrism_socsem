@@ -51,7 +51,8 @@ centrism_css <- list(
     "margin-right"="auto"),
   ".title-slide" = list("background-image" = "url(https://clanfear.github.io/centrism/markdown/socsem_092719/img/UWSocBG1_white.svg), url(https://clanfear.github.io/centrism/markdown/socsem_092719/img/title_slide_img.png)",
                         "background-position" = "center center, center bottom",
-                        "background-size" = "contain, contain")
+                        "background-size" = "contain, contain"),
+  ".remark-slide thead, .remark-slide tfoot, .remark-slide tr:nth-child(even)" = list("background: #000000")
 )
 mono_accent(base_color = "#342c5c",
             code_font_google = google_font("Fira Mono"),

@@ -17,11 +17,18 @@ output:
 ```{r setup, include=FALSE, purl=FALSE}
 options(htmltools.dir.version = FALSE)
 knitr::opts_chunk$set(comment = "##")
+library(dplyr)
+library(tidyr)
+library(ggplot2)
+library(patchwork)
+library(extrafont)
+library(ggforce)
+library(gt)
 ```
 
 ```{r xaringan-themer, include = FALSE, purl=FALSE}
-library(xaringanthemer)
-source("./centrism_css.R")
+# library(xaringanthemer)
+# source("./centrism_css.R")
 ```
 
 <br>
@@ -72,6 +79,8 @@ source("./centrism_css.R")
 
 * Centrism is *not* populism.
 
+* *It is not consistently related to any policy positions.*
+
 ---
 class: inverse
 # Typology of Centrism
@@ -89,13 +98,6 @@ class: inverse
 ## Electorate Centrism
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE, fig.width =7, fig.height=3, dpi = 1500, cache=TRUE}
-library(dplyr)
-library(tidyr)
-library(ggplot2)
-library(patchwork)
-library(extrafont)
-library(ggforce)
-
 ttf_import("../syntax/fonts")
 
 plot_left <- tibble(x = seq(-4, 4, length.out = 100), xpos=x, group = 0,
@@ -136,7 +138,9 @@ plot_left + plot_right
 ```
 
 .smallish[
-"I’d like to see somebody come in and make the case for electing a more moderate candidate, and I believe that if the Democrats want to beat President Trump, their best bet is electing somebody in the middle."<br>- Governor John Lynch, quoted by Alexander Burns, *New York Times*
+"I’d like to see somebody come in and make the case for electing a more moderate candidate, and I believe that if the Democrats want to beat President Trump, **their best bet is electing somebody in the middle**."<br>- Governor John Lynch, quoted by Alexander Burns, *New York Times*
+
+"[Centrists'] achievements have proved durable precisely because they managed to chart a moderate course that achieved some level of **buy-in from a broad swath of Americans**."<br>- Derek Chollet, *Washington Post*
 ]
 
 ---
@@ -165,9 +169,9 @@ tibble(x = rep(seq(-4, 4, length.out = 100),2),
 ```
 
 .smallish[
-"In most cases, these Democrats are framing their moderate instincts in terms of political process—stressing their willingness to cooperate with Republicans..."<br>- Alexander Burns, *New York Times*
+"In most cases, these Democrats are framing their moderate instincts in terms of political process—stressing their **willingness to cooperate** with Republicans..."<br>- Alexander Burns, *New York Times*
 
-"In theory, the dearth of moderates means it will be even harder next year for Congress—which failed to put together even mundane measures like farm and highway legislation without a fight this session—to pass bills."<br>- Paul Krugman, *New York Times*
+"In theory, **the dearth of moderates means it will be even harder** next year for Congress—which failed to put together even mundane measures like farm and highway legislation without a fight this session—to pass bills."<br>- Paul Krugman, *New York Times*
 ]
 
 ---
@@ -206,9 +210,9 @@ tibble(x = rep(seq(-4, 4, length.out = 100),2),
 ```
 
 .smallish[
-"Republicans are not the enemy... It’s the blind partisanship within the Republican Party and the blind partisanship within the Democratic Party..."<br>- Joe Cunningham, quoted by Kevin Robillard, *Huffington Post*
+"Republicans are not the enemy... It’s the **blind partisanship** within the Republican Party and the **blind partisanship** within the Democratic Party..."<br>- Joe Cunningham, quoted by Kevin Robillard, *Huffington Post*
 
-"Centrists are independent thinkers. They gauge situations based on context and reason, consideration and probability. They are open minded and exercise conviction. Willing to fight for reason as opposed to ideology."<br>- The (US) Centrist Party
+"Centrists are independent thinkers. They gauge situations based on context and reason, consideration and probability. They are open minded and exercise conviction. **Willing to fight for reason as opposed to ideology**."<br>- The (US) Centrist Party
 ]
 
 ---
@@ -231,12 +235,94 @@ tibble(x = seq(-4, 4, length.out = 100), xpos=x, group = 0,
 ```
 
 .smallish[
-"...fiscally conservative, socially liberal, open borders on trade and immigration, restrictive on gun rights, hawkish on foreign policy, and not crazy about raising taxes."<br>- Simon van Zuylen, *Washington Post*
+"[Centrists are] **fiscally conservative, socially liberal**, open borders on trade and immigration, restrictive on gun rights, hawkish on foreign policy, and not crazy about raising taxes."<br>- Simon van Zuylen, *Washington Post*
 ]
 
 ---
-Gilens & Page table
+class: inverse
+# Can they be used interchangeably?
 
+---
+### Bipartisan Compromise &ne; Electorate Centrism
+
+Grand bargain
+
+---
+### Nonpartisan Technocratic &ne; Electorate Centrism
+
+<br>
+.image-full[
+<img src="https://clanfear.github.io/centrism_socsem/slides/img/minwage.png">
+]
+
+---
+### Minimum Wage
+```{r, echo=FALSE, warning=FALSE, message=FALSE, dpi=1500, fig.width =7, fig.height=3, cache=TRUE}
+min_wage <- readxl::read_excel("../data/min_wage_extract.xlsx") %>% 
+  select(Measure, All) %>% 
+  filter(Measure !="Sample Size") %>% 
+  mutate(Measure = factor(Measure)) %>%
+  mutate(Position = factor(case_when(
+    Measure == "The minimum wage should immediately be raised to $15 per hour" ~ "$15 (immediate)",
+    Measure == "The minimum wage should gradually be raised to $15 per hour" ~ "$15 (gradual)",
+    Measure == "The minimum wage should be raised to an amount under $15 per hour" ~ "$7.25 - $15",
+    Measure == "The minimum wage should be kept the same" ~ "$7.25",
+    Measure == "The minimum wage should be reduced"  ~ "$0 - $7.25",
+    Measure == "The minimum wage should be eliminated" ~ "$0"
+  ), levels = c("$15 (immediate)", "$15 (gradual)", "$7.25 - $15","$7.25", "$0 - $7.25", "$0"), ordered=T),
+  Color = factor(case_when(
+    Position == "$15 (gradual)" ~ 1,
+    Position == "$7.25" ~ 2,
+    TRUE ~ 0
+  )))
+
+ggplot(min_wage, aes(x=Position, y = All, fill = Color)) + geom_col() +
+  theme_minimal(base_family = "Quattrocento") + 
+  xlab("\nPreferred Minimum Wage") +
+  scale_fill_manual(values=c("2" = "#458490", "1" = "#342c5c", "0" = "#cbd3a3")) +
+  scale_y_continuous("", limits = c(0, 400), labels = NULL) +
+  geom_curve(aes(x = 2, y = 325, xend = 2.35, yend=380), curvature = -0.45, angle = 90, 
+             arrow = arrow(angle = 30, length = unit(0.03, "npc"), ends = "first"), lwd = 0.6) + 
+  annotate("text", x = 3, y = 380, label = "Median Preferred\nMinimum Wage", family = "Quattrocento") +
+  geom_curve(aes(x = 4, y = 145, xend = 4.35, yend=200), curvature = -0.45, angle = 90 , 
+             arrow = arrow(angle = 30, length = unit(0.03, "npc"), ends = "first"), lwd = 0.6) + 
+  geom_hline(aes(yintercept = 0)) + 
+  annotate("text", x = 4.95, y = 200, label = "Current Federal\nMinimum Wage", family = "Quattrocento") +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        legend.position = "none") +
+  labs(caption = "Hill-HarrisX Poll\nJanuary 19-20, 2019\nN = 1000")
+```
+
+Voters' median preferred wage is over double the current federal minimum wage.
+
+---
+### Business Elite &ne; Electorate Centrism
+
+.smaller[
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+gp_table <- readr::read_csv("../data/gilens_page_table.csv")
+gp_table %>% 
+  mutate(Difference = `Multimillionaires`-`All citizens`) %>%
+  filter(group %in% c("Jobs and income", "Health care", "Retirement pensions")) %>%
+  gt(rowname_col = "measure", groupname_col = "group") %>% 
+  tab_header("Policy preferences of multimillionaires vs. average citizens") %>%
+  tab_style(style = cell_text(style = "italic", decorate = "underline"), locations = cells_group(c("Health care", "Jobs and income", "Retirement pensions"))) %>%
+  tab_style(style = cell_text(indent = 10), locations = cells_stub(rows=1:11)) %>%
+  fmt(rows = everything(), fns = function(x){paste0("&nbsp;",x)})
+  # fmt(rows = 15:18,
+  #     fns = function(x){paste0("(",x,")")}) %>%
+  # tab_source_note(source_note = md("From: *Democracy in America?* Benjamin I. Page & Martin Gilens, pg. 116"))  %>%
+  # tab_source_note(source_note = md("Data: SESA; various national opinion surveys. See Page, Bartels, and Seawright 2013.")) %>%
+  # tab_options(sourcenote.font.size = "12")
+
+```
+]
+<br>
+.smaller[
+From: *Democracy in America?* Benjamin I. Page & Martin Gilens, pg. 116<br>
+Data: SESA; various national opinion surveys. See Page, Bartels, and Seawright 2013.
+]
 ---
 ### The Electorate, Parties, and Centrist Positions
 ```{r, echo=FALSE, warning=FALSE, message=FALSE, dpi=1500, fig.width =6, fig.height=6, out.width="520px", fig.align='center', cache=TRUE, cache=TRUE}
@@ -326,52 +412,7 @@ ggplot(typology_df, aes(x=x_loc, y=y_loc, label = label)) +
 ```
 
 
----
-class: inverse
-# Federal Minimum Wage
-## A unidimensional example
 
----
-# Minimum Wage
-
-```{r, echo=FALSE, warning=FALSE, message=FALSE, dpi=1500, fig.width =7, fig.height=3, cache=TRUE}
-min_wage <- readxl::read_excel("../data/min_wage_extract.xlsx") %>% 
-  select(Measure, All) %>% 
-  filter(Measure !="Sample Size") %>% 
-  mutate(Measure = factor(Measure)) %>%
-  mutate(Position = factor(case_when(
-    Measure == "The minimum wage should immediately be raised to $15 per hour" ~ "$15 (immediate)",
-    Measure == "The minimum wage should gradually be raised to $15 per hour" ~ "$15 (gradual)",
-    Measure == "The minimum wage should be raised to an amount under $15 per hour" ~ "$7.25 - $15",
-    Measure == "The minimum wage should be kept the same" ~ "$7.25",
-    Measure == "The minimum wage should be reduced"  ~ "$0 - $7.25",
-    Measure == "The minimum wage should be eliminated" ~ "$0"
-  ), levels = c("$15 (immediate)", "$15 (gradual)", "$7.25 - $15","$7.25", "$0 - $7.25", "$0"), ordered=T),
-  Color = factor(case_when(
-    Position == "$15 (gradual)" ~ 1,
-    Position == "$7.25" ~ 2,
-    TRUE ~ 0
-  )))
-
-ggplot(min_wage, aes(x=Position, y = All, fill = Color)) + geom_col() +
-  theme_minimal(base_family = "Quattrocento") + 
-  xlab("\nPreferred Minimum Wage") +
-  scale_fill_manual(values=c("2" = "#458490", "1" = "#342c5c", "0" = "#cbd3a3")) +
-  scale_y_continuous("", limits = c(0, 400), labels = NULL) +
-  geom_curve(aes(x = 2, y = 325, xend = 2.35, yend=380), curvature = -0.45, angle = 90, 
-             arrow = arrow(angle = 30, length = unit(0.03, "npc"), ends = "first"), lwd = 0.6) + 
-  annotate("text", x = 3, y = 380, label = "Median Preferred\nMinimum Wage", family = "Quattrocento") +
-  geom_curve(aes(x = 4, y = 145, xend = 4.35, yend=200), curvature = -0.45, angle = 90 , 
-             arrow = arrow(angle = 30, length = unit(0.03, "npc"), ends = "first"), lwd = 0.6) + 
-  geom_hline(aes(yintercept = 0)) + 
-  annotate("text", x = 4.95, y = 200, label = "Current Federal\nMinimum Wage", family = "Quattrocento") +
-  theme(panel.grid.major = element_blank(),
-        panel.grid.minor = element_blank(),
-        legend.position = "none") +
-  labs(caption = "Hill-HarrisX Poll\nJanuary 19-20, 2019\nN = 1000")
-```
-
-Voters' median preferred wage is over double the current federal minimum wage.
 
 ---
 # Minimum Wage by Party
@@ -429,15 +470,28 @@ ggplot(min_wage_party, aes(x=Position, y = Prop, fill = Color)) + geom_col() +
 
 ---
 class: inverse
-# XXXX
+# Another issue?
 ## A more complex issue
 
 
 ---
-# Second Slide Title
+# Two-Columns hake it Up
 
 .pull-left[Some left side stuff]
 .pull-right[Some right side stuff]
+
+---
+# Why does this matter?
+
+---
+# Next steps
+
+---
+class: inverse
+# Suggestions and Questions
+
+
+Thanks for listening!
 
 ---
 class: inverse
